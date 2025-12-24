@@ -1,5 +1,5 @@
 # EX01 Developing a Simple Webserver
-## Date:
+## Date:24/12/25
 
 ## AIM:
 To develop a simple webserver to serve html pages and display the list of protocols in TCP/IP Protocol Suite.
@@ -37,9 +37,85 @@ Open a browser and navigate to http://127.0.0.1:8000 (or the assigned port).
 
 ## PROGRAM:
 
+from http.server import HTTPServer,BaseHTTPRequestHandler
+content ='''
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TCP/IP Protocol Table</title>
+  <style>
+    table {
+      width: 80%;
+      border-collapse: collapse;
+      margin: 20px auto;
+      font-family: Arial, sans-serif;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #2980b9;
+      color: white;
+    }
+    caption {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <table>
+    <caption>TCP/IP Protocol Suite</caption>
+    <tr>
+      <th>Layer</th>
+      <th>Function</th>
+      <th>Common Protocols</th>
+    </tr>
+    <tr>
+      <td>Application</td>
+      <td>Provides services to user applications</td>
+      <td>HTTP, FTP, SMTP, DNS, DHCP, SNMP</td>
+    </tr>
+    <tr>
+      <td>Transport</td>
+      <td>Reliable or fast data transmission</td>
+      <td>TCP, UDP</td>
+    </tr>
+    <tr>
+      <td>Internet</td>
+      <td>Routing and logical addressing</td>
+      <td>IP, ICMP, ARP, RARP</td>
+    </tr>
+    <tr>
+      <td>Network Access</td>
+      <td>Physical data transmission</td>
+      <td>Ethernet, Wi-Fi, PPP</td>
+    </tr>
+  </table>
+</body>
+</html>
+'''
+class MyServer(BaseHTTPRequestHandler):
+    def do_GET(self):
+        print("Get request received...")
+        self.send_response(200)
+        self.send_header("content-type", "text/html")
+        self.end_headers()
+        self.wfile.write(content.encode())
+print("This is my webserver")
+server_address =('',8000)
+httpd = HTTPServer(server_address,MyServer)
+httpd.serve_forever()
+
+
 
 ## OUTPUT:
+<img width="1018" height="570" alt="image" src="https://github.com/user-attachments/assets/2698763e-c5bf-4af3-bc80-43a9918d4397" />
 
+<img width="1016" height="495" alt="image" src="https://github.com/user-attachments/assets/198c044d-a991-4e2f-94ff-20fe6c4769ca" />
 
 ## RESULT:
 The program for implementing simple webserver is executed successfully.
